@@ -16,5 +16,7 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /opt /opt
 # nginx config file
 COPY ./default.conf /etc/nginx/conf.d/default.conf
+# nginx config file2
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /work/backend

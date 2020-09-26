@@ -2,12 +2,10 @@ up:
 	docker-compose up -d
 build:
 	docker-compose build --no-cache --force-rm
-laravel-install:
-	docker-compose exec app composer create-project --prefer-dist laravel/laravel .
-create-project:
-	@make build
 	@make up
-	@make laravel-install
+install-laravel8-login-package:
+	docker-compose exec app composer require laravel/jetstream
+	docker-compose exec app php artisan jetstream:install inertia --teams
 install-recommend-packages:
 	docker-compose exec app composer require doctrine/dbal
 	docker-compose exec app composer require --dev barryvdh/laravel-ide-helper
