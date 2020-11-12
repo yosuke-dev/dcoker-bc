@@ -8,6 +8,9 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - ./backend:/work/backend
+      - /work/backend/node_modules
+      - /work/backend/vendor
+      # - /work/backend/storage
 
   web:
     build: ./infra/docker/nginx
@@ -16,6 +19,9 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - ./backend:/work/backend
+      - /work/backend/node_modules
+      - /work/backend/vendor
+      # - /work/backend/storage
 
   db:
     build: ./infra/docker/mysql
