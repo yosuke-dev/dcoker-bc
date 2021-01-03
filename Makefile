@@ -2,7 +2,6 @@ up:
 	docker-compose up -d
 build:
 	docker-compose build --no-cache --force-rm
-	@make up
 install-laravel8-login-package:
 	docker-compose exec app composer require laravel/jetstream
 	docker-compose exec app php artisan jetstream:install inertia --teams
@@ -14,13 +13,25 @@ install-recommend-packages:
 	docker-compose exec app composer require --dev roave/security-advisories:dev-master
 	docker-compose exec app php artisan vendor:publish --provider="BeyondCode\DumpServer\DumpServerServiceProvider"
 	docker-compose exec app php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
-init:
-	docker-compose up -d --build
-	docker-compose exec app composer install
+install-bc:
+	git clone https://github.com/yosuke-dev/bear-collection.git backend
+create-project:
+	@make build
+	@make up
+	@make install-bc
+	@make yarn
+	@make composer-install
 	docker-compose exec app cp .env.example .env
 	docker-compose exec app php artisan key:generate
 	docker-compose exec app php artisan storage:link
-	docker-compose exec app php artisan migrate:fresh --seed
+	@make fresh
+init:
+	docker-compose up -d --build
+	@make composer-install
+	docker-compose exec app cp .env.example .env
+	docker-compose exec app php artisan key:generate
+	docker-compose exec app php artisan storage:link
+	@make fresh
 remake:
 	@make destroy
 	@make init
@@ -79,6 +90,8 @@ npm-watch-poll:
 	docker-compose exec web npm run watch-poll
 npm-hot:
 	docker-compose exec web npm run hot
+composer-install:
+	docker-compose exec app composer install
 yarn:
 	docker-compose exec web yarn
 yarn-install:
