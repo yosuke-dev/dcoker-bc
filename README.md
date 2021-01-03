@@ -9,22 +9,21 @@
 
 Build a simple laravel development environment with docker-compose.
 
+## Precondition
+
+- Installed
+  - [GNU Make](http://gnuwin32.sourceforge.net/packages/make.htm):^3.81
+  - [git](https://git-scm.com/)
+
 ## Usage
 
 ```bash
-$ git clone git@github.com:ucan-lab/docker-laravel.git
-$ cd docker-laravel
+$ git clone git@github.com:yosuke-dev/bear-collection.git
+$ cd docker-bc
 $ make create-project # Install the latest Laravel project
-$ make install-recommend-packages # Not required
 ```
 
 http://127.0.0.1
-
-Read this [Makefile](https://github.com/ucan-lab/docker-laravel/blob/master/Makefile).
-
-## Tips
-
-Read this [Wiki](https://github.com/ucan-lab/docker-laravel/wiki).
 
 ## Container structure
 

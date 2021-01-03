@@ -14,12 +14,16 @@ install-recommend-packages:
 	docker-compose exec app php artisan vendor:publish --provider="BeyondCode\DumpServer\DumpServerServiceProvider"
 	docker-compose exec app php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 install-bc:
-	git clone https://github.com/yosuke-dev/bear-collection.git backend
+	cd backend && git init
+	cd backend && git remote add origin https://github.com/yosuke-dev/bear-collection.git
+	cd backend && git fetch origin
+	cd backend && git checkout -b first-work origin/first-work
 create-project:
 	@make build
 	@make up
 	@make install-bc
 	@make yarn
+	@make yarn-dev
 	@make composer-install
 	docker-compose exec app cp .env.example .env
 	docker-compose exec app php artisan key:generate
